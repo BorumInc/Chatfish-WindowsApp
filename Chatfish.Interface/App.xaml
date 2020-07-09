@@ -1,9 +1,69 @@
-﻿<Application x:Class="Chatfish.Interface.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Chatfish.Interface"
-             StartupUri="MainWindow.xaml">
+﻿<Application x:Class="Chatfish.Interface.App" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:local="clr-namespace:Chatfish.Interface" StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="TankMenu">
+            <Style.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style x:Key="TankList">
+            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center" />
+            <Setter Property="FrameworkElement.Width" Value="250" />
+            <Style.Resources>
+                <Style TargetType="StackPanel">
+                    <Style.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="FontWeight" Value="400"/>
+                            <Setter Property="Height" Value="30"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style x:Key="TankListItem" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <!-- Expense Report Data -->
+        <XmlDataProvider x:Key="ExpenseDataSource" XPath="Expenses">
+            <x:XData>
+                <Expenses xmlns="">
+                    <Person Name="James Earl Jones" Department="Legal">
+                        <Expense ExpenseType="Lunch" ExpenseAmount="50" />
+                        <Expense ExpenseType="Transportation" ExpenseAmount="50" />
+                    </Person>
+                    <Person Name="Lisa" Department="Marketing">
+                        <Expense ExpenseType="Document printing" ExpenseAmount="50"/>
+                        <Expense ExpenseType="Gift" ExpenseAmount="125" />
+                        <Expense ExpenseType="Newspaper subscription" ExpenseAmount="30" />
+                    </Person>
+                    <Person Name="John" Department="Engineering">
+                        <Expense ExpenseType="Magazine subscription" ExpenseAmount="50"/>
+                        <Expense ExpenseType="New machine" ExpenseAmount="600" />
+                        <Expense ExpenseType="Software" ExpenseAmount="500" />
+                    </Person>
+                    <Person Name="Mary" Department="Finance">
+                        <Expense ExpenseType="Dinner" ExpenseAmount="100" />
+                    </Person>
+                    <Person Name="Tom Scott"></Person>
+                    <Person Name="Chris Evans"></Person>
+                    <Person Name="Mr. Morton"></Person>
+                    <Person Name="Larry Ullman"></Person>
+                    <Person Name="Paul Grass"></Person>
+                    <Person Name="Kim Kardashian"></Person>
+                </Expenses>
+            </x:XData>
+        </XmlDataProvider>
+        <!-- Name item template -->
+        <DataTemplate x:Key="nameItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource TankListItem}" Text="{Binding XPath=@Name}"/>
+            </StackPanel>
+        </DataTemplate>
     </Application.Resources>
 </Application>
