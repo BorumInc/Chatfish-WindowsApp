@@ -3,32 +3,39 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:local="clr-namespace:Chatfish.Interface" mc:Ignorable="d" Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+    xmlns:local="clr-namespace:Chatfish.Interface" mc:Ignorable="d" Title="Chatfish" Height="450" Width="800" WindowState="Maximized">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
+        <Grid Style="{StaticResource ChatPanel}" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="100" />
+                <RowDefinition />
+                <RowDefinition Height="200" />
+                <RowDefinition Height="100" />
             </Grid.RowDefinitions>
 
-            <Label Content="Enter some text" Margin="5"/>
-            <TextBox Grid.Row="1" Name="MyTextBox" Margin="5"/>
-            <Button Grid.Row="2" Content="OK" Margin="5"/>
-            <Label Grid.Row="3" Name="MyLabel" Margin="5"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="~" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Chat Name" Margin="5"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="MyTextBox" Margin="5"/>
+            <Button Grid.Row="3" Grid.Column="2" Content="OK" Margin="5"/>
         </Grid>
         <DockPanel Margin="0,10,10,10" Style="{StaticResource TankMenu}" Grid.Column="1">
-            <TextBox DockPanel.Dock="Top"></TextBox>
+            <TextBox TextChanged="TextBoxBase_OnTextChanged" DockPanel.Dock="Top"></TextBox>
             <TextBox DockPanel.Dock="Bottom"></TextBox>
             <!-- Chat or Contact List -->
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ListBox ItemsSource="{Binding Source={StaticResource ExpenseDataSource}, XPath=Person}" ItemTemplate="{StaticResource nameItemTemplate}" ItemContainerStyle="{StaticResource TankList}"></ListBox>
+                <ListBox x:Name="ChatList" ItemsSource="{Binding Source={StaticResource ExpenseDataSource}, XPath=Person}" ItemTemplate="{StaticResource nameItemTemplate}" ItemContainerStyle="{StaticResource TankList}"></ListBox>
             </ScrollViewer>
         </DockPanel>
     </Grid>
