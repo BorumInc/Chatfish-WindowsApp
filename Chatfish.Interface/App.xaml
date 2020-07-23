@@ -1,9 +1,10 @@
-﻿<Application x:Class="Chatfish.Interface.App" 
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:System="clr-namespace:System;assembly=mscorlib" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:local="clr-namespace:Chatfish.Interface" StartupUri="MainWindow.xaml">
+﻿<Application x:Class="Chatfish.Interface.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:Chatfish.Interface" StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Foreground" Value="Red" />
+            <Setter Property="FontSize" Value="16" />
+        </Style>
         <Style x:Key="ChatPanel">
             <Style.Resources>
                 <Style TargetType="TextBlock">
@@ -13,13 +14,7 @@
             </Style.Resources>
         </Style>
         <Style x:Key="TankMenu">
-            <Style.Resources>
-                <Style TargetType="TextBox">
-                    <Setter Property="Height" Value="40" />
-                    <Setter Property="Foreground" Value="Red" />
-                    <Setter Property="FontSize" Value="16" />
-                </Style>
-            </Style.Resources>
+            <Style.Resources></Style.Resources>
         </Style>
         <Style x:Key="TankList" TargetType="ListBoxItem">
             <Setter Property="FontSize" Value="20" />
@@ -46,37 +41,46 @@
         <XmlDataProvider x:Key="ExpenseDataSource" XPath="Expenses">
             <x:XData>
                 <Expenses xmlns="">
-                    <Person Name="James Earl Jones" Age="20" Department="Legal">
+                    <Contact Name="James Earl Jones" Age="20" ProfilePicture="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/96b007a7-e86d-465f-a231-fcb646b3625e/d30j6xh-9269b2eb-06c3-4c70-a44b-2e4b63342006.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi85NmIwMDdhNy1lODZkLTQ2NWYtYTIzMS1mY2I2NDZiMzYyNWUvZDMwajZ4aC05MjY5YjJlYi0wNmMzLTRjNzAtYTQ0Yi0yZTRiNjMzNDIwMDYucG5nIn1dXX0.xKiSsqS74EKXxW_nSh6995qJmEX0AqhZm28ho9pv0Dc">
                         <Expense ExpenseType="Lunch" ExpenseAmount="50" />
                         <Expense ExpenseType="Transportation" ExpenseAmount="50" />
-                    </Person>
-                    <Person Name="Lisa" Age="18" Department="Marketing">
-                        <Expense ExpenseType="Document printing" ExpenseAmount="50"/>
+                    </Contact>
+                    <Contact Name="Lisa" Age="18" Department="Marketing" ProfilePicture="https://toppng.com/uploads/thumbnail/lisa-simpson-lisa-from-the-simpsons-head-11563176790zlr4ctvni6.png">
+                        <Expense ExpenseType="Document printing" ExpenseAmount="50" />
                         <Expense ExpenseType="Gift" ExpenseAmount="125" />
                         <Expense ExpenseType="Newspaper subscription" ExpenseAmount="30" />
-                    </Person>
-                    <Person Name="John" Age="6" Department="Engineering">
-                        <Expense ExpenseType="Magazine subscription" ExpenseAmount="50"/>
+                    </Contact>
+                    <Contact Name="John" Age="6" Department="Engineering" ProfilePicture="https://www.runscope.com/static/img/public/customer-portrait-edmunds.png">
+                        <Expense ExpenseType="Magazine subscription" ExpenseAmount="50" />
                         <Expense ExpenseType="New machine" ExpenseAmount="600" />
                         <Expense ExpenseType="Software" ExpenseAmount="500" />
-                    </Person>
-                    <Person Name="Mary" Age="24" Department="Finance">
+                    </Contact>
+                    <Contact Name="Mary" Age="24" Department="Finance">
                         <Expense ExpenseType="Dinner" ExpenseAmount="100" />
-                    </Person>
-                    <Contact Name="Tom Scott"></Contact>
-                    <Person Name="Chris Evans" Age="13"></Person>
-                    <Person Name="Mr. Morton" Age="13"></Person>
-                    <Person Name="Larry Ullman" Age="12"></Person>
-                    <Person Name="Paul Grass" Age="30"></Person>
-                    <Person Name="Kim Kardashian" Age="52"></Person>
+                    </Contact>
+                    <Contact Name="Tom Scott" ProfilePicture="https://thesohoagency.co.uk/public/assets/uploads/client/thumb/Tom_Scott_head_shot-Jamie_Drew_2019.jpg"></Contact>
+                    <Contact Name="Chris Evans" Age="13" ProfilePicture="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/92bbc449-5326-448c-a629-8b5e6829a73e/d9zxsjp-060e9d8f-11f3-4d6a-9206-35949d48f596.png/v1/fill/w_1023,h_771,q_75,strp/chris_evans_png_by_fridamcguiness-d9zxsjp.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl0sIm9iaiI6W1t7InBhdGgiOiIvZi85MmJiYzQ0OS01MzI2LTQ0OGMtYTYyOS04YjVlNjgyOWE3M2UvZDl6eHNqcC0wNjBlOWQ4Zi0xMWYzLTRkNmEtOTIwNi0zNTk0OWQ0OGY1OTYucG5nIiwid2lkdGgiOiI8PTEwMjMiLCJoZWlnaHQiOiI8PTc3MSJ9XV19.MSZWu2SHEm7cwH7LEsRko1Y7sT7PJqkckv5wB9Cxn8A"></Contact>
+                    <Contact Name="Mr. Morton" Age="13" ProfilePicture=""></Contact>
+                    <Contact Name="Larry Ullman" Age="12" ProfilePicture=""></Contact>
+                    <Contact Name="Paul Grass" Age="30" ProfilePicture="https://upload.wikimedia.org/wikipedia/commons/8/8d/Vladimir_Putin_%282020-02-20%29.jpg"></Contact>
+                    <Contact Name="Kim Kardashian" Age="52" ProfilePicture=""></Contact>
                 </Expenses>
             </x:XData>
         </XmlDataProvider>
         <!-- Name item template -->
         <DataTemplate x:Key="nameItemTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding XPath=@Name}"/>
+                <Border BorderThickness="2" BorderBrush="Black" CornerRadius="100">
+                    <Image Width="35" Height="35" Source="{Binding XPath=@ProfilePicture}" />
+                </Border>
+                <TextBlock Text="{Binding XPath=@Name}" />
             </StackPanel>
         </DataTemplate>
+        <ControlTemplate x:Key="HexagonalTextBox" TargetType="TextBox">
+            <Grid>
+                
+                <ContentPresenter />
+            </Grid>
+        </ControlTemplate>
     </Application.Resources>
 </Application>

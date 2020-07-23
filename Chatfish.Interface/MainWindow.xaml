@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:local="clr-namespace:Chatfish.Interface" mc:Ignorable="d" Title="Chatfish" Height="450" Width="800" WindowState="Maximized">
+    xmlns:local="clr-namespace:Chatfish.Interface" mc:Ignorable="d" Title="Chatfish" Height="450" Width="800" WindowState="Maximized" Icon="Images/icon.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -25,17 +25,47 @@
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
             
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="~" />
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="Chat Name" Margin="5"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="MyTextBox" Margin="5"/>
+            <Canvas x:Name="SearchButton" MouseLeftButtonDown="SearchButton_Click" MouseEnter="SearchButton_Hover" MouseLeave="SearchButton_Leave" Grid.Column="0" Grid.Row="0" Margin="15,0,0,0">             
+                <Line X1="25" Y1="25" X2="50" Y2="50" StrokeThickness="3" Stroke="Gray"/>
+                <Ellipse Width="25" Height="25" Stroke="Gray" 
+   Canvas.Top="10" Canvas.Left="10" StrokeThickness="3" Fill="White" />
+            </Canvas>
+            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Name="MessageSearchBox" Margin="5" Height="50" Visibility="Hidden" VerticalAlignment="Top" />
+
+            <TextBlock x:Name="ChatName" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="The Three Musketeers" Margin="5"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="ChatMessageBox" Margin="5"/>
             <Button Grid.Row="3" Grid.Column="2" Content="OK" Margin="5"/>
         </Grid>
         <DockPanel Margin="0,10,10,10" Style="{StaticResource TankMenu}" Grid.Column="1">
-            <TextBox TextChanged="TextBoxBase_OnTextChanged" DockPanel.Dock="Top"></TextBox>
-            <TextBox DockPanel.Dock="Bottom"></TextBox>
+            <TextBox TextChanged="TextBoxBase_OnTextChanged" DockPanel.Dock="Top" />
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" />
+                <Button Grid.Column="1">
+                    <Button.ToolTip>
+                        <ToolTip PlacementRectangle="50,0,0,0">
+                            <TextBlock>Create a new group chat</TextBlock>
+                        </ToolTip>
+                    </Button.ToolTip>
+                    <Image Source="Images/newgroup.png" />
+                </Button>
+                <Button Grid.Column="2" >
+                    <Button.ToolTip>
+                        <ToolTip PlacementRectangle="50,0,0,0">
+                            <TextBlock>Create a new group of chats (Knot)</TextBlock>
+                        </ToolTip>
+                    </Button.ToolTip>
+                    <Image Source="Images/newknot.png" />
+                </Button>
+            </Grid>
+
             <!-- Chat or Contact List -->
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ListBox x:Name="ChatList" ItemsSource="{Binding Source={StaticResource ExpenseDataSource}, XPath=Person}" ItemTemplate="{StaticResource nameItemTemplate}" ItemContainerStyle="{StaticResource TankList}"></ListBox>
+                <ListBox x:Name="ChatList" ItemsSource="{Binding Source={StaticResource ExpenseDataSource}, XPath=Contact}" ItemTemplate="{StaticResource nameItemTemplate}" ItemContainerStyle="{StaticResource TankList}"></ListBox>
             </ScrollViewer>
         </DockPanel>
     </Grid>
