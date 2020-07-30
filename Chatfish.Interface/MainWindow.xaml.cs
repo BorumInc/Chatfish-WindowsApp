@@ -18,6 +18,7 @@ using System.Runtime.InteropServices;
 using System.Xml;
 using System.IO;
 using System.Xml.Serialization;
+using Chatfish.ViewModels;
 
 namespace Chatfish.Interface
 {
@@ -36,6 +37,7 @@ namespace Chatfish.Interface
             InitializeComponent();
             AttachConsole(-1);
             hiddenOrVisible = new BooleanToVisibilityConverter();
+            this.DataContext = new ContactViewModel();
         }
 
         private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -74,25 +76,11 @@ namespace Chatfish.Interface
                 item.Stroke = Brushes.Gray;
             }
         }
-    }
 
-    public class Person
-    {
-        public String Name { get; set; }
-        public int Age { get; set; }
-        public String Department { get; set; }
-
-        public static Person InstantiateFromXML(string input)
+        private void ChatList_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            XmlSerializer ser = new XmlSerializer(typeof(Person));
-
-            using (StringReader sr = new StringReader(input))
-            {
-                return (Person)ser.Deserialize(sr);
-            }
+            var currentContact = ((ListBox) sender).SelectedItem;          
+            this.DataContext = currentContact; // Sets data context to xmldata of current
         }
-
-        public override String ToString() => $"Name: {Name}\nAge: {Age}\nDepartment: {Department}";
     }
-
 }

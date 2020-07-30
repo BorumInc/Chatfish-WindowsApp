@@ -4,27 +4,35 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:local="clr-namespace:Chatfish.Interface" mc:Ignorable="d" Title="Chatfish" Height="450" Width="800" WindowState="Maximized" Icon="Images/icon.ico">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
 
-        <Grid Style="{StaticResource ChatPanel}" Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="200" />
+        </Grid.RowDefinitions>
+
+        <Grid Style="{StaticResource ChatPanel}" Grid.Column="0" Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100" />
                 <RowDefinition />
                 <RowDefinition Height="200" />
                 <RowDefinition Height="100" />
             </Grid.RowDefinitions>
-
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition />
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
-            
             <Canvas x:Name="SearchButton" MouseLeftButtonDown="SearchButton_Click" MouseEnter="SearchButton_Hover" MouseLeave="SearchButton_Leave" Grid.Column="0" Grid.Row="0" Margin="15,0,0,0">             
                 <Line X1="25" Y1="25" X2="50" Y2="50" StrokeThickness="3" Stroke="Gray"/>
                 <Ellipse Width="25" Height="25" Stroke="Gray" 
@@ -36,7 +44,14 @@
             <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="ChatMessageBox" Margin="5"/>
             <Button Grid.Row="3" Grid.Column="2" Content="OK" Margin="5"/>
         </Grid>
-        <DockPanel Margin="0,10,10,10" Style="{StaticResource TankMenu}" Grid.Column="1">
+        <Border x:Name="ContactPopup" Style="{StaticResource ContactPopup}" HorizontalAlignment="Center" Visibility="{Binding DisplayPanel, Converter={StaticResource BoolToVisibility}}" Grid.Column="0" Grid.Row="1" BorderBrush="Orange" BorderThickness="2" CornerRadius="25" Width="300">
+            <StackPanel>
+                <TextBlock Text="{Binding XPath=@Name}" />
+                <TextBlock Text="{Binding XPath=@StatusMessage}" />
+                <Image Source="{Binding XPath=@ProfilePicture}" />
+            </StackPanel>
+        </Border>
+        <DockPanel Margin="0,10,10,10" Style="{StaticResource TankMenu}" Grid.Column="1" Grid.RowSpan="3">
             <TextBox TextChanged="TextBoxBase_OnTextChanged" DockPanel.Dock="Top" />
             <Grid DockPanel.Dock="Bottom">
                 <Grid.ColumnDefinitions>
@@ -65,7 +80,7 @@
 
             <!-- Chat or Contact List -->
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ListBox x:Name="ChatList" ItemsSource="{Binding Source={StaticResource ExpenseDataSource}, XPath=Contact}" ItemTemplate="{StaticResource nameItemTemplate}" ItemContainerStyle="{StaticResource TankList}"></ListBox>
+                <ListBox x:Name="ChatList" ItemsSource="{Binding Source={StaticResource ExpenseDataSource}, XPath=Contact}" ItemTemplate="{StaticResource nameItemTemplate}" ItemContainerStyle="{StaticResource TankList}" SelectionChanged="ChatList_SelectionChanged"></ListBox>
             </ScrollViewer>
         </DockPanel>
     </Grid>
