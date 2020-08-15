@@ -44,13 +44,18 @@
             <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="ChatMessageBox" Margin="5"/>
             <Button Grid.Row="3" Grid.Column="2" Content="OK" Margin="5"/>
         </Grid>
-        <Border x:Name="ContactPopup" Style="{StaticResource ContactPopup}" HorizontalAlignment="Center" Visibility="{Binding DisplayPanel, Converter={StaticResource BoolToVisibility}}" Grid.Column="0" Grid.Row="1" BorderBrush="Orange" BorderThickness="2" CornerRadius="25" Width="300">
-            <StackPanel>
-                <TextBlock Text="{Binding XPath=@Name}" />
-                <TextBlock Text="{Binding XPath=@StatusMessage}" />
-                <Image Source="{Binding XPath=@ProfilePicture}" />
+        <Border x:Name="ContactPopup" Style="{StaticResource ContactPopup}" Grid.Column="0" Grid.Row="1">
+            <StackPanel DataContext="{Binding CurrentContact}" HorizontalAlignment="Center">
+                <Button Content="Close" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                    AncestorType={x:Type Window}},
+                    Path=DataContext.ClosePopupCommand}" />
+                <TextBlock HorizontalAlignment="Center" Style="{StaticResource ContactPopup}" Text="{Binding Name}" />
+                <TextBlock Style="{StaticResource ContactPopup}" Text="{Binding StatusMessage, FallbackValue='At the gym'}" />
+                <Image Style="{StaticResource ContactPopup}" Source="{Binding ProfilePicture}" />
             </StackPanel>
         </Border>
+         
+        
         <DockPanel Margin="0,10,10,10" Style="{StaticResource TankMenu}" Grid.Column="1" Grid.RowSpan="3">
             <TextBox TextChanged="TextBoxBase_OnTextChanged" DockPanel.Dock="Top" />
             <Grid DockPanel.Dock="Bottom">
@@ -78,10 +83,28 @@
                 </Button>
             </Grid>
 
-            <!-- Chat or Contact List -->
+            <!-- Chat or Contact List 
+            {Binding Source={StaticResource ExpenseDataSource}, XPath=Contact}-->
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ListBox x:Name="ChatList" ItemsSource="{Binding Source={StaticResource ExpenseDataSource}, XPath=Contact}" ItemTemplate="{StaticResource nameItemTemplate}" ItemContainerStyle="{StaticResource TankList}" SelectionChanged="ChatList_SelectionChanged"></ListBox>
+                <ListBox x:Name="ChatList" 
+                    ItemsSource="{Binding TankItems}"  
+                    SelectedItem="{Binding CurrentContact}"
+                    ItemContainerStyle="{StaticResource TankList}"
+                    >
+                    <!-- Name item template -->
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Border BorderThickness="2" BorderBrush="Black" CornerRadius="100">
+                                    <Image Width="35" Height="35" Source="{Binding ProfilePicture}" />
+                                </Border>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </ScrollViewer>
+        
         </DockPanel>
     </Grid>
 </Window>

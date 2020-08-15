@@ -18,6 +18,7 @@ using System.Runtime.InteropServices;
 using System.Xml;
 using System.IO;
 using System.Xml.Serialization;
+using System.Reflection;
 using Chatfish.ViewModels;
 
 namespace Chatfish.Interface
@@ -37,13 +38,23 @@ namespace Chatfish.Interface
             InitializeComponent();
             AttachConsole(-1);
             hiddenOrVisible = new BooleanToVisibilityConverter();
-            this.DataContext = new ContactViewModel();
+            this.DataContext = new TankViewModel();
+            Console.WriteLine(((TankViewModel) DataContext).CurrentContact);
+        }
+
+        private void TankList_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            // DONE DisplayPopup properties are correct
+            // DONE CurrentContact is correct
+            bool displayPopupVal = ((TankViewModel) DataContext).DisplayPopup;
+            Console.WriteLine(hiddenOrVisible.Convert(displayPopupVal, typeof(Visibility), null, null));
         }
 
         private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionView cv = (CollectionView)CollectionViewSource.GetDefaultView(ChatList.ItemsSource);
             // Apply the filter
+            Console.WriteLine(cv);
             cv.Filter = item =>
             {
                 XmlElement readableElement = item as XmlElement;
@@ -75,12 +86,6 @@ namespace Chatfish.Interface
             {
                 item.Stroke = Brushes.Gray;
             }
-        }
-
-        private void ChatList_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            var currentContact = ((ListBox) sender).SelectedItem;          
-            this.DataContext = currentContact; // Sets data context to xmldata of current
         }
     }
 }
