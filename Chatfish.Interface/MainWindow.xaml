@@ -46,12 +46,12 @@
         </Grid>
         <Border x:Name="ContactPopup" Style="{StaticResource ContactPopup}" Grid.Column="0" Grid.Row="1">
             <StackPanel DataContext="{Binding CurrentContact}" HorizontalAlignment="Center">
-                <Button Content="Close" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                <Button Style="{StaticResource CloseButton}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                     AncestorType={x:Type Window}},
                     Path=DataContext.ClosePopupCommand}" />
-                <TextBlock HorizontalAlignment="Center" Style="{StaticResource ContactPopup}" Text="{Binding Name}" />
-                <TextBlock Style="{StaticResource ContactPopup}" Text="{Binding StatusMessage, FallbackValue='At the gym'}" />
-                <Image Style="{StaticResource ContactPopup}" Source="{Binding ProfilePicture}" />
+                <TextBlock Text="{Binding Name}" />
+                <TextBlock Text="{Binding StatusMessage, FallbackValue='At the gym'}" />
+                <Image Source="{Binding ProfilePicture}" />
             </StackPanel>
         </Border>
          
