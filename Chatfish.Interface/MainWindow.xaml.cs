@@ -31,39 +31,12 @@ namespace Chatfish.Interface
 
         [DllImport("Kernel32.dll")]
         public static extern bool AttachConsole(int processId);
-        private BooleanToVisibilityConverter hiddenOrVisible;
 
         public MainWindow()
         {
             InitializeComponent();
             AttachConsole(-1);
-            hiddenOrVisible = new BooleanToVisibilityConverter();
-            this.DataContext = new TankViewModel();
-        }
-
-        private void SearchButton_Click(object sender, MouseButtonEventArgs e)
-        {
-            bool searchBoxIsVisible = MessageSearchBox.Visibility == Visibility.Visible;
-            Visibility searchBoxVisibility = (Visibility)hiddenOrVisible.Convert(!searchBoxIsVisible, typeof(Visibility), null, null);
-            MessageSearchBox.Visibility = searchBoxVisibility;
-            ChatName.Visibility = searchBoxIsVisible ? Visibility.Visible : Visibility.Hidden;
-        }
-
-        private void SearchButton_Hover(object sender, RoutedEventArgs e)
-        {
-            ((Canvas)sender).Cursor = Cursors.Hand;
-            foreach (Shape item in ((Canvas)sender).Children)
-            {
-                item.Stroke = Brushes.Black;
-            }
-        }
-
-        private void SearchButton_Leave(object sender, RoutedEventArgs e)
-        {
-            foreach (Shape item in ((Canvas)sender).Children)
-            {
-                item.Stroke = Brushes.Gray;
-            }
+            this.DataContext = new ChatfishViewModel();
         }
     }
 }

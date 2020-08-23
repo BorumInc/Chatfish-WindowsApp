@@ -31,4 +31,30 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="SearchButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Gray" />
+                
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Canvas Margin="15,0,0,0">
+                        <Line X1="25" Y1="25" X2="50" Y2="50" StrokeThickness="3" Stroke="{TemplateBinding BorderBrush}" />
+                        <Ellipse Width="25" Height="25" Stroke="{TemplateBinding BorderBrush}" Canvas.Top="10" Canvas.Left="10" StrokeThickness="3" Fill="White" />
+                    </Canvas>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="BorderBrush" Value="Gray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+          
+    </Style>
 </ResourceDictionary>

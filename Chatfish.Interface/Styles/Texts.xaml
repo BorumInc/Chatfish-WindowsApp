@@ -17,8 +17,6 @@
             </Style>
         </Style.Resources>
     </Style>
-
-    <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
     
     <Style x:Key="ContactPopup" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="White" />

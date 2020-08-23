@@ -12,7 +12,12 @@ namespace Chatfish.ViewModels
 {
     public class TankViewModel : BaseViewModel
     {
-        private ObservableCollection<ContactViewModel> allTankItems;
+        /// <summary>
+        /// The collection of all the contacts;
+        /// Never changed so as to be used as a reference for filtering
+        /// </summary>
+        private readonly ObservableCollection<ContactViewModel> allTankItems;
+
         private ContactViewModel _currentContact;
         private string _searchQuery = "";
 
@@ -23,9 +28,8 @@ namespace Chatfish.ViewModels
 
         /// <summary>
         /// The contact that is currently being displayed in the panel;
-        /// Determined by filtering all TankItem's into only where its DisplayPopup property is true,
+        /// Bound to selected item of UI list that shows contacts
         /// Then gets the first result in the enumerable;
-        /// Empty constructor when one isn't being displayed
         /// </summary>
         public ContactViewModel CurrentContact 
         { 
