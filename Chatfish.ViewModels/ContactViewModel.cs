@@ -41,19 +41,5 @@ namespace Chatfish.ViewModels
         {
             
         }
-
-        public ContactViewModel(Dictionary<string, dynamic> data) : base()
-        {
-            dynamic val;
-            data.TryGetValue("Name", out val);
-            Name = val as string;
-        }
-
-        public ContactViewModel(string name, string profilePicture, string status)
-        {
-            Name = name;
-            ProfilePicture = profilePicture;
-            StatusMessage = status;
-        }
     }
 }

@@ -39,28 +39,6 @@ namespace Chatfish.Interface
             AttachConsole(-1);
             hiddenOrVisible = new BooleanToVisibilityConverter();
             this.DataContext = new TankViewModel();
-            Console.WriteLine(((TankViewModel) DataContext).CurrentContact);
-        }
-
-        private void TankList_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            // DONE DisplayPopup properties are correct
-            // DONE CurrentContact is correct
-            bool displayPopupVal = ((TankViewModel) DataContext).DisplayPopup;
-            Console.WriteLine(hiddenOrVisible.Convert(displayPopupVal, typeof(Visibility), null, null));
-        }
-
-        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            CollectionView cv = (CollectionView)CollectionViewSource.GetDefaultView(ChatList.ItemsSource);
-            // Apply the filter
-            Console.WriteLine(cv);
-            cv.Filter = item =>
-            {
-                XmlElement readableElement = item as XmlElement;
-                String name = readableElement.GetAttribute("Name");
-                return name.Contains(((TextBox)sender).Text);
-            };
         }
 
         private void SearchButton_Click(object sender, MouseButtonEventArgs e)

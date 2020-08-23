@@ -12,7 +12,9 @@ namespace Chatfish.ViewModels
 {
     public class TankViewModel : BaseViewModel
     {
+        private ObservableCollection<ContactViewModel> allTankItems;
         private ContactViewModel _currentContact;
+        private string _searchQuery = "";
 
         /// <summary>
         /// The list of contacts that are part of the user's tank
@@ -20,9 +22,9 @@ namespace Chatfish.ViewModels
         public ObservableCollection<ContactViewModel> TankItems { get; set; }
 
         /// <summary>
-        /// The contact that is currently being displayed in the panel
-        /// Determined by filtering all TankItem into only where its DisplayPopup property is true
-        /// Then gets the first result in the enumerable
+        /// The contact that is currently being displayed in the panel;
+        /// Determined by filtering all TankItem's into only where its DisplayPopup property is true,
+        /// Then gets the first result in the enumerable;
         /// Empty constructor when one isn't being displayed
         /// </summary>
         public ContactViewModel CurrentContact 
@@ -37,13 +39,30 @@ namespace Chatfish.ViewModels
             }
         }
 
-        public ICommand ClosePopupCommand { get; set; }
-
         // Raises INotifyPropertyChanged.PropertyChanged
         public bool DisplayPopup { get; set; }
 
+        /// <summary>
+        /// The text used to filter out the currently displayed contacts in the tank list
+        /// </summary>
+        public string SearchQuery 
+        {
+            get => _searchQuery;
+            set
+            {
+                _searchQuery = value;
+                OnPropertyChanged(nameof(_searchQuery));
+
+                TankItems = new ObservableCollection<ContactViewModel>(allTankItems.Where(item => item.Name.Contains(_searchQuery)));
+                OnPropertyChanged(nameof(TankItems));
+            } 
+        }
+
+        public ICommand ClosePopupCommand { get; set; }
+
         public TankViewModel() : base()
         {
+            allTankItems = LoadTankItems();
             TankItems = LoadTankItems();
             ClosePopupCommand = new RelayCommand(() => 
             {
