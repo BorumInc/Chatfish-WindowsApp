@@ -11,38 +11,38 @@ using System.IO;
 namespace Chatfish.ViewModels
 {
     /// <summary>
-    /// The view that displays all of the user's contacts (their tank)
+    /// The view that displays all of the user's chats (Knots and Catfish)
     /// </summary>
-    public class TankViewModel : BaseViewModel
+    public class SchoolViewModel : BaseViewModel
     {
         /// <summary>
-        /// The collection of all the contacts;
+        /// The collection of all the Chats;
         /// Never changed so as to be used as a reference for filtering
         /// </summary>
-        private readonly ObservableCollection<ContactViewModel> allTankItems;
+        private readonly ObservableCollection<ChatViewModel> allSchoolItems;
 
-        private ContactViewModel _currentContact;
+        private ChatViewModel _currentChat;
         private string _searchQuery = "";
 
         /// <summary>
-        /// The list of contacts that are part of the user's tank
+        /// The list of Chats that are part of the user's School
         /// </summary>
-        public ObservableCollection<ContactViewModel> TankItems { get; set; }
+        public ObservableCollection<ChatViewModel> SchoolItems { get; set; }
 
         /// <summary>
-        /// The contact that is currently being displayed in the panel;
-        /// Bound to selected item of UI list that shows contacts
+        /// The Chat that is currently being displayed in the panel;
+        /// Bound to selected item of UI list that shows Chats
         /// Then gets the first result in the enumerable;
         /// </summary>
-        public ContactViewModel CurrentContact 
+        public ChatViewModel CurrentChat 
         { 
-            get => _currentContact;
+            get => _currentChat;
             set
             {
-                _currentContact = value;
-                OnPropertyChanged(nameof(_currentContact));
+                _currentChat = value;
+                OnPropertyChanged(nameof(_currentChat));
 
-                this.DisplayPopup = this.CurrentContact != null;
+                this.DisplayPopup = this.CurrentChat != null;
             }
         }
 
@@ -50,7 +50,7 @@ namespace Chatfish.ViewModels
         public bool DisplayPopup { get; set; }
 
         /// <summary>
-        /// The text used to filter out the currently displayed contacts in the tank list
+        /// The text used to filter out the currently displayed Chats in the School list
         /// </summary>
         public string SearchQuery 
         {
@@ -60,17 +60,17 @@ namespace Chatfish.ViewModels
                 _searchQuery = value;
                 OnPropertyChanged(nameof(_searchQuery));
 
-                TankItems = new ObservableCollection<ContactViewModel>(allTankItems.Where(item => item.Name.Contains(_searchQuery)));
-                OnPropertyChanged(nameof(TankItems));
+                SchoolItems = new ObservableCollection<ChatViewModel>(allSchoolItems.Where(item => item.Name.Contains(_searchQuery)));
+                OnPropertyChanged(nameof(SchoolItems));
             } 
         }
 
         public ICommand ClosePopupCommand { get; set; }
 
-        public TankViewModel() : base()
+        public SchoolViewModel() : base()
         {
-            allTankItems = LoadTankItems();
-            TankItems = LoadTankItems();
+            allSchoolItems = LoadSchoolItems();
+            SchoolItems = LoadSchoolItems();
             ClosePopupCommand = new RelayCommand(() => 
             {
                 DisplayPopup = false;
@@ -78,32 +78,32 @@ namespace Chatfish.ViewModels
             });
         }
 
-        private ObservableCollection<ContactViewModel> LoadTankItems()
+        private ObservableCollection<ChatViewModel> LoadSchoolItems()
         {
-            var contactData = new ObservableCollection<ContactViewModel>();
+            var ChatData = new ObservableCollection<ChatViewModel>();
 
             string solutionPath =  Directory.GetParent(
                 Directory.GetCurrentDirectory()).FullName;
-            string fileName = Path.Combine(solutionPath, "Chatfish.Aquarium", "Contacts.xml");
+            string fileName = Path.Combine(solutionPath, "Chatfish.Aquarium", "Chats.xml");
 
             XmlDocument doc = new XmlDocument();
 
             doc.Load(fileName);
             XmlElement root = doc.DocumentElement;
-            XmlNodeList nodes = root.SelectNodes("Contact"); 
+            XmlNodeList nodes = root.SelectNodes("Chat"); 
 
             foreach (XmlElement node in nodes)
             {
-                contactData.Add(new ContactViewModel()
+                ChatData.Add(new ChatViewModel()
                 {
                     Name = node["Name"]?.InnerText,
-                    StatusMessage = node["StatusMessage"]?.InnerText ?? "",
                     ProfilePicture = node["ProfilePicture"]?.InnerText ?? Path.Combine(
                         solutionPath, "Chatfish.Interface", "Images", "unavailable.png")
                 });
             }
 
-            return contactData;
+            return ChatData;
         }
+
     }
 }

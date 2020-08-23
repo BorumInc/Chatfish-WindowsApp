@@ -34,7 +34,7 @@
             <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Name="MessageSearchBox" Margin="5" Height="50" Visibility="{Binding DisplaySearchBox, Converter={StaticResource BoolToVisibility}}"
             VerticalAlignment="Top" />
 
-            <TextBlock x:Name="ChatName" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding CurrentChat.ChatName}" Visibility="{Binding DisplayChatName, Converter={StaticResource BoolToVisibility}}" Margin="5" />
+            <TextBlock x:Name="ChatName" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding CurrentChat.Name}" Visibility="{Binding DisplayChatName, Converter={StaticResource BoolToVisibility}}" Margin="5" />
             <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="ChatMessageBox" Margin="5" />
             <Button Grid.Row="3" Grid.Column="2" Content="OK" Margin="5" />
         </Grid>

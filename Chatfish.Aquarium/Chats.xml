@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chat Data -->
+<Chats xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Chat>
+        <Name>The Three Musketeers</Name>
+    </Chat>
+    <Chat>
+        <Name>The Four Musketeers</Name>
+    </Chat>
+    <Chat>
+        <Name>The Dynamic Duo</Name>
+    </Chat>
+    <Chat>
+        <Name>United Classmates of Science</Name>
+    </Chat>
+</Chats>
