@@ -13,16 +13,15 @@ namespace Chatfish.ViewModels
     /// <summary>
     /// The view that displays all of the user's contacts (their tank)
     /// </summary>
-    public class TankViewModel : BaseViewModel
+    public class TankViewModel : SidebarListViewModel
     {
         /// <summary>
         /// The collection of all the contacts;
         /// Never changed so as to be used as a reference for filtering
         /// </summary>
-        private readonly ObservableCollection<ContactViewModel> allTankItems;
+        internal readonly ObservableCollection<ContactViewModel> allTankItems;
 
         private ContactViewModel _currentContact;
-        private string _searchQuery = "";
 
         /// <summary>
         /// The list of contacts that are part of the user's tank
@@ -46,36 +45,13 @@ namespace Chatfish.ViewModels
             }
         }
 
-        // Raises INotifyPropertyChanged.PropertyChanged
-        public bool DisplayPopup { get; set; }
-
         /// <summary>
-        /// The text used to filter out the currently displayed contacts in the tank list
+        /// Default constructor for TankViewModel
         /// </summary>
-        public string SearchQuery 
-        {
-            get => _searchQuery;
-            set
-            {
-                _searchQuery = value;
-                OnPropertyChanged(nameof(_searchQuery));
-
-                TankItems = new ObservableCollection<ContactViewModel>(allTankItems.Where(item => item.Name.Contains(_searchQuery)));
-                OnPropertyChanged(nameof(TankItems));
-            } 
-        }
-
-        public ICommand ClosePopupCommand { get; set; }
-
         public TankViewModel() : base()
         {
-            allTankItems = LoadTankItems();
-            TankItems = LoadTankItems();
-            ClosePopupCommand = new RelayCommand(() => 
-            {
-                DisplayPopup = false;
-                OnPropertyChanged(nameof(DisplayPopup));
-            });
+            // Load the initial set of tank items to both collections
+            allTankItems = TankItems = LoadTankItems();
         }
 
         private ObservableCollection<ContactViewModel> LoadTankItems()

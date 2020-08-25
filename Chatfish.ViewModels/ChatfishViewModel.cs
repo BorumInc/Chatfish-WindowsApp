@@ -10,14 +10,26 @@ using System.IO;
 
 namespace Chatfish.ViewModels
 {
+    /// <summary>
+    /// The view model that encompasses the entire menu screen for Chatfish
+    /// </summary>
     public class ChatfishViewModel : BaseViewModel
     {
-        public TankViewModel Tank { get; set; } = new TankViewModel();
-
+        /// <summary>
+        /// The view model for the UI Panel that lets the user chat in a Knot or Catfish
+        /// </summary>
         public ChatPanelViewModel ChatPanel {get; set; } = new ChatPanelViewModel();
 
-        public ChatfishViewModel() : base()
-        {
-        }
+        /// <summary>
+        /// The view model for the UI Panel that lets the user view, search, and populate his or her 
+        /// chats and contacts
+        /// </summary>
+        public SidebarViewModel SidebarPanel {get; set; } = new SidebarViewModel();
+
+        /// <summary>
+        /// The currently displayed popup on top of the chat panel
+        /// disabling all other view model's controls
+        /// </summary>
+        public PopupViewModel CurrentPopupViewModel { get; set; }
     }
 }

@@ -13,16 +13,15 @@ namespace Chatfish.ViewModels
     /// <summary>
     /// The view that displays all of the user's chats (Knots and Catfish)
     /// </summary>
-    public class SchoolViewModel : BaseViewModel
+    public class SchoolViewModel : SidebarListViewModel
     {
         /// <summary>
         /// The collection of all the Chats;
         /// Never changed so as to be used as a reference for filtering
         /// </summary>
-        private readonly ObservableCollection<ChatViewModel> allSchoolItems;
+        internal readonly ObservableCollection<ChatViewModel> allSchoolItems;
 
         private ChatViewModel _currentChat;
-        private string _searchQuery = "";
 
         /// <summary>
         /// The list of Chats that are part of the user's School
@@ -46,36 +45,11 @@ namespace Chatfish.ViewModels
             }
         }
 
-        // Raises INotifyPropertyChanged.PropertyChanged
-        public bool DisplayPopup { get; set; }
-
-        /// <summary>
-        /// The text used to filter out the currently displayed Chats in the School list
-        /// </summary>
-        public string SearchQuery 
-        {
-            get => _searchQuery;
-            set
-            {
-                _searchQuery = value;
-                OnPropertyChanged(nameof(_searchQuery));
-
-                SchoolItems = new ObservableCollection<ChatViewModel>(allSchoolItems.Where(item => item.Name.Contains(_searchQuery)));
-                OnPropertyChanged(nameof(SchoolItems));
-            } 
-        }
-
-        public ICommand ClosePopupCommand { get; set; }
+        
 
         public SchoolViewModel() : base()
         {
-            allSchoolItems = LoadSchoolItems();
-            SchoolItems = LoadSchoolItems();
-            ClosePopupCommand = new RelayCommand(() => 
-            {
-                DisplayPopup = false;
-                OnPropertyChanged(nameof(DisplayPopup));
-            });
+            allSchoolItems = SchoolItems = LoadSchoolItems();
         }
 
         private ObservableCollection<ChatViewModel> LoadSchoolItems()
