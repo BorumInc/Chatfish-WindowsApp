@@ -13,48 +13,13 @@ namespace Chatfish.ViewModels
     /// <summary>
     /// The view that displays all of the user's contacts (their tank)
     /// </summary>
-    public class TankViewModel : SidebarListViewModel
-    {
+    public class TankViewModel : SidebarListViewModel<ContactViewModel>
+    {        
         /// <summary>
-        /// The collection of all the contacts;
-        /// Never changed so as to be used as a reference for filtering
+        /// Loads all the Tank items (contacts) from the XML file
         /// </summary>
-        internal readonly ObservableCollection<ContactViewModel> allTankItems;
-
-        private ContactViewModel _currentContact;
-
-        /// <summary>
-        /// The list of contacts that are part of the user's tank
-        /// </summary>
-        public ObservableCollection<ContactViewModel> TankItems { get; set; }
-
-        /// <summary>
-        /// The contact that is currently being displayed in the panel;
-        /// Bound to selected item of UI list that shows contacts
-        /// Then gets the first result in the enumerable;
-        /// </summary>
-        public ContactViewModel CurrentContact 
-        { 
-            get => _currentContact;
-            set
-            {
-                _currentContact = value;
-                OnPropertyChanged(nameof(_currentContact));
-
-                this.DisplayPopup = this.CurrentContact != null;
-            }
-        }
-
-        /// <summary>
-        /// Default constructor for TankViewModel
-        /// </summary>
-        public TankViewModel() : base()
-        {
-            // Load the initial set of tank items to both collections
-            allTankItems = TankItems = LoadTankItems();
-        }
-
-        private ObservableCollection<ContactViewModel> LoadTankItems()
+        /// <returns>The list of contacts</returns>
+        internal override ObservableCollection<ContactViewModel> LoadSidebarListItems()
         {
             var contactData = new ObservableCollection<ContactViewModel>();
 
@@ -72,9 +37,9 @@ namespace Chatfish.ViewModels
             {
                 contactData.Add(new ContactViewModel()
                 {
-                    Name = node["Name"]?.InnerText,
+                    Heading = node["Name"]?.InnerText,
                     StatusMessage = node["StatusMessage"]?.InnerText ?? "",
-                    ProfilePicture = node["ProfilePicture"]?.InnerText ?? Path.Combine(
+                    IconURL = node["ProfilePicture"]?.InnerText ?? Path.Combine(
                         solutionPath, "Chatfish.Interface", "Images", "unavailable.png")
                 });
             }

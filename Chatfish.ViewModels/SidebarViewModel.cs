@@ -26,6 +26,7 @@ namespace Chatfish.ViewModels
         private string _searchQuery = "";
         
         /* Public Properties */
+
         /// <summary>
         /// The current list content type that the user has selected
         /// Defaults to Contacts
@@ -58,12 +59,12 @@ namespace Chatfish.ViewModels
                 switch (this.CurrentList)
                 {
                     case SidebarState.Chats:
-                        Tank.TankItems = new ObservableCollection<ContactViewModel>(Tank.allTankItems.Where(item => item.Name.Contains(_searchQuery)));
-                        OnPropertyChanged(nameof(Tank.TankItems));
+                        Tank.SidebarListItems = Tank.FilterSidebarList(SearchQuery);
+                        OnPropertyChanged(nameof(Tank.SidebarListItems));
                         break;
                     case SidebarState.Contacts:
-                        School.SchoolItems = new ObservableCollection<ChatViewModel>(School.allSchoolItems.Where(item => item.Name.Contains(_searchQuery)));
-                        OnPropertyChanged(nameof(School.SchoolItems));
+                        School.SidebarListItems = School.FilterSidebarList(SearchQuery);
+                        OnPropertyChanged(nameof(School.SidebarListItems));
                         break;
                 }
                 

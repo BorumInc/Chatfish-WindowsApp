@@ -6,19 +6,9 @@ using System.Windows.Input;
 
 namespace Chatfish.ViewModels
 {
-    public class ContactViewModel : BaseViewModel
+    public class ContactViewModel : SidebarListItemViewModel
     {
         private string _statusMessage;
-
-        /// <summary>
-        /// The name the user entered that identifies him or her
-        /// </summary>
-        public string Name {get; set; }
-
-        /// <summary>
-        /// The url to the user's profile picture
-        /// </summary>
-        public string ProfilePicture {get; set; }
         
         /// <summary>
         /// The user's status message
