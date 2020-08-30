@@ -14,7 +14,9 @@ namespace Chatfish.ViewModels
     /// The view that displays all of the user's contacts (their tank)
     /// </summary>
     public class TankViewModel : SidebarListViewModel<ContactViewModel>
-    {        
+    {
+        public TankViewModel(ConcreteMediator mediator) : base(mediator) {}   
+
         /// <summary>
         /// Loads all the Tank items (contacts) from the XML file
         /// </summary>

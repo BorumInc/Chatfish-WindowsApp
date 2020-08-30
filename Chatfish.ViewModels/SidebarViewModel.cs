@@ -36,13 +36,13 @@ namespace Chatfish.ViewModels
         /// <summary>
         /// The set of data for the Tank, the contacts list
         /// </summary>
-        public TankViewModel Tank { get; set; } = new TankViewModel();
+        public TankViewModel Tank { get; set; }
 
         /// <summary>
         /// The set of data for the School, the chats list
         /// </summary>
         /// <returns></returns>
-        public SchoolViewModel School {get; set; } = new SchoolViewModel();
+        public SchoolViewModel School {get; set; }
 
         /// <summary>
         /// The text used to filter out the currently displayed contacts in the tank list
@@ -88,7 +88,7 @@ namespace Chatfish.ViewModels
         /// </summary>
         public ICommand SwitchStateCommand;
 
-        public SidebarViewModel() : base()
+        public SidebarViewModel(ConcreteMediator mediator) : base()
         {
             SwitchStateCommand = new RelayCommand(() => 
             {
@@ -102,6 +102,9 @@ namespace Chatfish.ViewModels
                         break;
                 }
             });
+
+            Tank = new TankViewModel(mediator);
+            School = new SchoolViewModel(mediator);
         }
     }
 }

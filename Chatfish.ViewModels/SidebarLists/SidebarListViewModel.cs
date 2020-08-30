@@ -6,6 +6,7 @@ namespace Chatfish.ViewModels
     public abstract class SidebarListViewModel<T> : BaseViewModel
         where T : SidebarListItemViewModel, new()
     {
+        internal readonly ConcreteMediator PopupMediator;
         /// <summary>
         /// The collection of all the SidebarListItem's;
         /// Never changed so as to be used as a reference for filtering
@@ -32,14 +33,15 @@ namespace Chatfish.ViewModels
                 _currentSidebarListItem = value;
                 OnPropertyChanged(nameof(_currentSidebarListItem));
 
-                this.DisplayPopup = this.CurrentSidebarListItem != null;
+                PopupMediator.Notify(CurrentSidebarListItem, "change");
             }
         }
 
-        public SidebarListViewModel() : base()
+        public SidebarListViewModel(ConcreteMediator mediator) : base()
         {
             // Load the initial set of tank items to both collections
-            allSidebarListItems = SidebarListItems = LoadSidebarListItems();;
+            allSidebarListItems = SidebarListItems = LoadSidebarListItems();
+            PopupMediator = mediator;
         }
 
         internal abstract ObservableCollection<T> LoadSidebarListItems();

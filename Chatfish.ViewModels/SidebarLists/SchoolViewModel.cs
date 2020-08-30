@@ -15,6 +15,8 @@ namespace Chatfish.ViewModels
     /// </summary>
     public class SchoolViewModel : SidebarListViewModel<ChatViewModel>
     {
+        public SchoolViewModel(ConcreteMediator mediator) : base(mediator) {}
+
         internal override ObservableCollection<ChatViewModel> LoadSidebarListItems()
         {
             var ChatData = new ObservableCollection<ChatViewModel>();

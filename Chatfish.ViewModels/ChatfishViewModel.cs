@@ -24,12 +24,20 @@ namespace Chatfish.ViewModels
         /// The view model for the UI Panel that lets the user view, search, and populate his or her 
         /// chats and contacts
         /// </summary>
-        public SidebarViewModel SidebarPanel {get; set; } = new SidebarViewModel();
+        public SidebarViewModel SidebarPanel {get; set; }
 
         /// <summary>
         /// The currently displayed popup on top of the chat panel
         /// disabling all other view model's controls
         /// </summary>
         public PopupViewModel CurrentPopupViewModel { get; set; }
+
+        public ConcreteMediator SidebarListToPopupMediator;
+
+        public ChatfishViewModel() : base()
+        {
+            SidebarListToPopupMediator = new ConcreteMediator(this);
+            SidebarPanel = new SidebarViewModel(SidebarListToPopupMediator);
+        }
     }
 }
