@@ -75,17 +75,32 @@
                 </StackPanel>
             </StackPanel>    
 
-            <!-- Chat or Contact List -->
-            <ScrollViewer DataContext="{Binding Tank}" VerticalScrollBarVisibility="Auto">
-                <ListBox x:Name="ChatList" ItemsSource="{Binding TankItems}" SelectedItem="{Binding CurrentContact}" ItemContainerStyle="{StaticResource TankList}">
+            <!-- Contact List -->
+            <ScrollViewer Visibility="{Binding Tank.DisplayList}" DataContext="{Binding Tank}" VerticalScrollBarVisibility="Auto">
+                <ListBox x:Name="ContactList" ItemsSource="{Binding SidebarListItems}" SelectedItem="{Binding CurrentSidebarListItem}" ItemContainerStyle="{StaticResource SidebarList}">
                     <!-- Name item template -->
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Border BorderThickness="2" BorderBrush="Black" CornerRadius="100">
-                                    <Image Width="35" Height="35" Source="{Binding ProfilePicture}" />
+                                    <Image Width="35" Height="35" Source="{Binding IconURL}" />
                                 </Border>
-                                <TextBlock Text="{Binding Name}" />
+                                <TextBlock Text="{Binding Heading}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+
+            <ScrollViewer>
+                <ListBox x:Name="ChatList" ItemsSource="{Binding SchoolItems}" SelectedItem="{Binding CurrentSidebarListItem}" ItemContainerStyle="{StaticResource SidebarList}">
+                    <!-- Name item template -->
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Border>
+                                    <Image />
+                                </Border>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

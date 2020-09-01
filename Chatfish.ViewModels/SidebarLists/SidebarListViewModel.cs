@@ -14,6 +14,13 @@ namespace Chatfish.ViewModels
         internal readonly ObservableCollection<T> allSidebarListItems;
 
         private T _currentSidebarListItem;
+        
+        /* Public Properties */
+
+        /// <summary>
+        /// The visiblity of the sidebar list view; true when visible, false when another list is visible
+        /// </summary>
+        public bool DisplayList {get; set; }
 
         /// <summary>
         /// The list of SidebarListItem's that are part of the user's School

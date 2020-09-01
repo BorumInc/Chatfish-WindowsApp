@@ -21,7 +21,7 @@ namespace Chatfish.ViewModels
         {
             var ChatData = new ObservableCollection<ChatViewModel>();
 
-            string solutionPath =  Directory.GetParent(
+            string solutionPath = Directory.GetParent(
                 Directory.GetCurrentDirectory()).FullName;
             string fileName = Path.Combine(solutionPath, "Chatfish.Aquarium", "Chats.xml");
 

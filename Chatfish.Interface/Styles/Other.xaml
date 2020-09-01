@@ -9,7 +9,7 @@
         <Style.Resources></Style.Resources>
     </Style>
     
-    <Style x:Key="TankList" TargetType="ListBoxItem">
+    <Style x:Key="SidebarList" TargetType="ListBoxItem">
         <Setter Property="FontSize" Value="{Binding FontSize}" />
     </Style>
 </ResourceDictionary>

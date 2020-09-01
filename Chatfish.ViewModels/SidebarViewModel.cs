@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Reflection;
 
 namespace Chatfish.ViewModels
 {
@@ -11,7 +12,7 @@ namespace Chatfish.ViewModels
     public enum SidebarState
     {
         Contacts,
-        Chats
+        Chats,
     }
 
     /// <summary>
@@ -31,7 +32,7 @@ namespace Chatfish.ViewModels
         /// The current list content type that the user has selected
         /// Defaults to Contacts
         /// </summary>
-        public SidebarState CurrentList {get; set; } = SidebarState.Contacts;
+        public SidebarState CurrentListState {get; set; } = SidebarState.Contacts;
         
         /// <summary>
         /// The set of data for the Tank, the contacts list
@@ -56,7 +57,7 @@ namespace Chatfish.ViewModels
                 _searchQuery = value;
                 OnPropertyChanged(nameof(_searchQuery));
 
-                switch (this.CurrentList)
+                switch (this.CurrentListState)
                 {
                     case SidebarState.Chats:
                         Tank.SidebarListItems = Tank.FilterSidebarList(SearchQuery);
@@ -70,6 +71,7 @@ namespace Chatfish.ViewModels
                 
             } 
         }
+
 
         /* Commands */
 
@@ -92,19 +94,30 @@ namespace Chatfish.ViewModels
         {
             SwitchStateCommand = new RelayCommand(() => 
             {
-                switch (CurrentList)
+                switch (CurrentListState)
                 {
                     case SidebarState.Chats:
-                        CurrentList = SidebarState.Contacts;
+                        CurrentListState = SidebarState.Contacts;
+                        School.DisplayList = false;
+                        Tank.DisplayList = true;
                         break;
                     case SidebarState.Contacts:
-                        CurrentList = SidebarState.Chats;
+                        CurrentListState = SidebarState.Chats;
+                        School.DisplayList = true;
+                        Tank.DisplayList = false;
                         break;
                 }
             });
 
+            InitializeSidebarLists(mediator);
+        }
+
+        private void InitializeSidebarLists(ConcreteMediator mediator)
+        {
             Tank = new TankViewModel(mediator);
+            Tank.DisplayList = CurrentListState == SidebarState.Contacts;
             School = new SchoolViewModel(mediator);
+            School.DisplayList = CurrentListState == SidebarState.Chats;
         }
     }
 }
