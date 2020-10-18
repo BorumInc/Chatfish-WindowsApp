@@ -11,7 +11,7 @@ namespace Chatfish.ViewModels
 
         public ConcreteMediator(ChatfishViewModel applicationViewModel) 
         {
-            ApplicationViewModel = applicationViewModel;    
+            ApplicationViewModel = applicationViewModel;  
         }
 
         /// <summary>
@@ -22,11 +22,13 @@ namespace Chatfish.ViewModels
         /// <param name="eventName">the action</param>
         public void Notify(BaseViewModel sender, string eventName)
         {
-            if (sender is SidebarListViewModel<SidebarListItemViewModel> && eventName == "change") 
+            // When the currently selected item in a sidebar list is changed
+            if (sender is ContactViewModel && eventName == "change") 
             {
-                var newValue = ((SidebarListViewModel<SidebarListItemViewModel>) sender).CurrentSidebarListItem;
-                ApplicationViewModel.CurrentPopupViewModel.DisplayPopup = newValue != null;
-            }
+                ApplicationViewModel.CurrentPopupViewModel = new ContactPopupViewModel();
+                ApplicationViewModel.CurrentPopupViewModel.DisplayPopup = sender != null;
+                ApplicationViewModel.CurrentPopupViewModel.CurrentSidebarListItem = sender as ContactViewModel;
+            } 
         }
     } 
 }

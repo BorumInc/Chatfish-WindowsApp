@@ -5,11 +5,24 @@
 
     <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 
-    <Style x:Key="TankMenu">
+    <Style x:Key="TankMenu" TargetType="{x:Type DockPanel}">
+        <Setter Property="Margin" Value="0,10,10,10" />
         <Style.Resources></Style.Resources>
     </Style>
+
+    <Style x:Key="SidebarList" TargetType="ScrollViewer">
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <!-- The ScrollViewer has the data context which contains DisplayList 
+        Binding RelativeSource as self takes away the need to create a new style BasedOn this -->
+        <Setter Property="Visibility">
+            <Setter.Value>
+                <Binding Path="DisplayList" RelativeSource="{RelativeSource Self}" Converter="{StaticResource BoolToVisibility}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
     
-    <Style x:Key="SidebarList" TargetType="ListBoxItem">
+    <Style x:Key="SidebarListItem" TargetType="ListBoxItem">
         <Setter Property="FontSize" Value="{Binding FontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
 </ResourceDictionary>

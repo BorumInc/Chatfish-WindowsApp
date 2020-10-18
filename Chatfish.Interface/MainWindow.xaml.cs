@@ -37,6 +37,7 @@ namespace Chatfish.Interface
             InitializeComponent();
             AttachConsole(-1);
             this.DataContext = new ChatfishViewModel();
+            Console.WriteLine(((ChatfishViewModel) DataContext).SidebarPanel.Tank.DisplayList);
         }
     }
 }

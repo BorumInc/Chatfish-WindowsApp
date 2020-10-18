@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Reflection;
 
 namespace Chatfish.ViewModels
 {
@@ -25,7 +24,7 @@ namespace Chatfish.ViewModels
     {
         /* Private Instance Variables */
         private string _searchQuery = "";
-        
+
         /* Public Properties */
 
         /// <summary>
@@ -56,19 +55,9 @@ namespace Chatfish.ViewModels
             {
                 _searchQuery = value;
                 OnPropertyChanged(nameof(_searchQuery));
-
-                switch (this.CurrentListState)
-                {
-                    case SidebarState.Chats:
-                        Tank.SidebarListItems = Tank.FilterSidebarList(SearchQuery);
-                        OnPropertyChanged(nameof(Tank.SidebarListItems));
-                        break;
-                    case SidebarState.Contacts:
-                        School.SidebarListItems = School.FilterSidebarList(SearchQuery);
-                        OnPropertyChanged(nameof(School.SidebarListItems));
-                        break;
-                }
                 
+                dynamic sidebarList = QuerySearch();
+                OnPropertyChanged(nameof(sidebarList.SidebarListItems));                
             } 
         }
 
@@ -86,38 +75,63 @@ namespace Chatfish.ViewModels
         public ICommand NewKnotCommand;
         
         /// <summary>
-        /// The command to change what the list is currently displaying
+        /// The command to change the sidebar state to chats
         /// </summary>
-        public ICommand SwitchStateCommand;
+        public ICommand SwitchToChatsCommand {get; set; }
+
+        /// <summary>
+        /// The command to change the Sidebar State to contacts
+        /// </summary>
+        public ICommand SwitchToContactsCommand {get; set; }
 
         public SidebarViewModel(ConcreteMediator mediator) : base()
         {
-            SwitchStateCommand = new RelayCommand(() => 
+            SwitchToChatsCommand = new RelayCommand(() => 
             {
-                switch (CurrentListState)
-                {
-                    case SidebarState.Chats:
-                        CurrentListState = SidebarState.Contacts;
-                        School.DisplayList = false;
-                        Tank.DisplayList = true;
-                        break;
-                    case SidebarState.Contacts:
-                        CurrentListState = SidebarState.Chats;
-                        School.DisplayList = true;
-                        Tank.DisplayList = false;
-                        break;
-                }
+                CurrentListState = SidebarState.Chats;
+                School.DisplayList = true;
+                Tank.DisplayList = false;
+            });
+
+            SwitchToContactsCommand = new RelayCommand(() => 
+            {
+                CurrentListState = SidebarState.Contacts;
+                School.DisplayList = false;
+                Tank.DisplayList = true;
             });
 
             InitializeSidebarLists(mediator);
         }
 
+        /* Helper Methods */
+
         private void InitializeSidebarLists(ConcreteMediator mediator)
         {
             Tank = new TankViewModel(mediator);
-            Tank.DisplayList = CurrentListState == SidebarState.Contacts;
+            Tank.DisplayList = CurrentListState.Equals(SidebarState.Contacts);
             School = new SchoolViewModel(mediator);
-            School.DisplayList = CurrentListState == SidebarState.Chats;
+            School.DisplayList = CurrentListState.Equals(SidebarState.Chats);
+        }
+
+        /// <summary>
+        /// Determine search results of SearchQuery 
+        /// by dynamically getting the current sidebar list's property name,
+        /// then calling FilterSidebarList on that property
+        /// </summary>
+        /// <returns>The object that contains the search query results</returns>
+        private dynamic QuerySearch()
+        {
+            switch(CurrentListState)
+            {
+                case SidebarState.Contacts:
+                    Tank.SidebarListItems = Tank.FilterSidebarList(SearchQuery);
+                    return Tank.SidebarListItems;
+                case SidebarState.Chats:
+                    School.SidebarListItems = School.FilterSidebarList(SearchQuery);
+                    return School.SidebarListItems;
+                default:
+                    return null;
+            }
         }
     }
 }

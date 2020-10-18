@@ -28,8 +28,8 @@ namespace Chatfish.ViewModels
         public ObservableCollection<T> SidebarListItems { get; set; }
 
         /// <summary>
-        /// The contact that is currently being displayed in the panel;
-        /// Bound to selected item of UI list that shows contacts
+        /// The list item that is currently being displayed in the panel;
+        /// Bound to selected item of UI list;
         /// Then gets the first result in the enumerable;
         /// </summary>
         public T CurrentSidebarListItem

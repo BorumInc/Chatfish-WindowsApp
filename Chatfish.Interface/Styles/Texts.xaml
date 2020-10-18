@@ -20,7 +20,7 @@
     
     <Style x:Key="ContactPopup" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="White" />
-        <Setter Property="Visibility" Value="{Binding Path=DisplayPopup, Converter={StaticResource BoolToVisibility}}" />
+        <Setter Property="Visibility" Value="{Binding Path=DisplayPopup, Converter={StaticResource BoolToVisibility}, FallbackValue=Hidden}" />
         <Setter Property="BorderBrush" Value="Orange" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="CornerRadius" Value="25" />

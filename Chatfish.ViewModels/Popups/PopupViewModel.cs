@@ -4,8 +4,10 @@ namespace Chatfish.ViewModels
 {
     public abstract class PopupViewModel : BaseViewModel
     {
+        public SidebarListItemViewModel CurrentSidebarListItem { get; set; }
+
         // Raises INotifyPropertyChanged.PropertyChanged
-        public bool DisplayPopup { get; set; }
+        public bool DisplayPopup { get; set; } = false;
 
         public ICommand ClosePopupCommand { get; set; }
 

@@ -45,29 +45,47 @@
             <Button Grid.Row="3" Grid.Column="2" Content="OK" Margin="5" />
         </Grid>
 
-
-        <Border DataContext="{Binding SidebarPanel.Tank}" x:Name="ContactPopup" Style="{StaticResource ContactPopup}" Grid.Column="0" Grid.Row="1">
-            <StackPanel DataContext="{Binding CurrentContact}" HorizontalAlignment="Center">
-                <Button Style="{StaticResource CloseButton}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
-                    AncestorType={x:Type Border}},
-                    Path=DataContext.ClosePopupCommand}" />
-                <TextBlock Text="{Binding Name}" />
-                <TextBlock Text="{Binding StatusMessage, FallbackValue='At the gym'}" />
-                <Image Source="{Binding ProfilePicture}" />
-            </StackPanel>
+        <Border DataContext="{Binding CurrentPopupViewModel}" x:Name="ContactPopup" Style="{StaticResource ContactPopup}" Grid.Column="0" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <Button Grid.Row="0" 
+                        Style="{StaticResource CloseButton}" 
+                        Command="{Binding ClosePopupCommand}" />
+                <StackPanel Grid.Row="1" 
+                            DataContext="{Binding CurrentSidebarListItem}" 
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding Heading}" />
+                    <TextBlock Text="{Binding StatusMessage, FallbackValue='At the gym'}" />
+                    <Image Source="{Binding IconURL}" />
+                </StackPanel>
+            </Grid>
         </Border>
 
         <!-- Tank Panel -->
-        <DockPanel DataContext="{Binding SidebarPanel}" Margin="0,10,10,10" Style="{StaticResource TankMenu}" Grid.Column="1" Grid.RowSpan="3">
-            <TextBox Text="{Binding Tank.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top" />
+        <DockPanel DataContext="{Binding SidebarPanel}" Style="{StaticResource TankMenu}" Grid.Column="1" Grid.RowSpan="3">
+            <TextBox 
+                Text="{Binding SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                DockPanel.Dock="Top" />
 
             <StackPanel DockPanel.Dock="Bottom">
                 <TextBox />
                 <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Command="{Binding }">
+                    <Button Command="{Binding SwitchToContactsCommand}">
                         <Button.ToolTip>
                             <ToolTip PlacementRectangle="50,0,0,0">
-                                <TextBlock>View contacts</TextBlock>
+                                <TextBlock Text="View contacts" />
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Image Source="Images/unavailable.png" />
+                    </Button>
+                    <Button Command="{Binding SwitchToChatsCommand}">
+                        <Button.ToolTip>
+                            <ToolTip PlacementRectangle="50,0,0,0">
+                                <TextBlock Text="View chats" />
                             </ToolTip>
                         </Button.ToolTip>
                         <Image Source="Images/unavailable.png" />
@@ -75,25 +93,8 @@
                 </StackPanel>
             </StackPanel>    
 
-            <!-- Contact List -->
-            <ScrollViewer Visibility="{Binding Tank.DisplayList}" DataContext="{Binding Tank}" VerticalScrollBarVisibility="Auto">
-                <ListBox x:Name="ContactList" ItemsSource="{Binding SidebarListItems}" SelectedItem="{Binding CurrentSidebarListItem}" ItemContainerStyle="{StaticResource SidebarList}">
-                    <!-- Name item template -->
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Border BorderThickness="2" BorderBrush="Black" CornerRadius="100">
-                                    <Image Width="35" Height="35" Source="{Binding IconURL}" />
-                                </Border>
-                                <TextBlock Text="{Binding Heading}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
-
-            <ScrollViewer>
-                <ListBox x:Name="ChatList" ItemsSource="{Binding SchoolItems}" SelectedItem="{Binding CurrentSidebarListItem}" ItemContainerStyle="{StaticResource SidebarList}">
+            <ScrollViewer Style="{StaticResource SidebarList}" DataContext="{Binding School}">
+                <ListBox x:Name="ChatList" ItemsSource="{Binding SchoolItems}" SelectedItem="{Binding CurrentSidebarListItem}" ItemContainerStyle="{StaticResource SidebarListItem}">
                     <!-- Name item template -->
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -101,6 +102,25 @@
                                 <Border>
                                     <Image />
                                 </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+
+            <!-- Contact List -->
+            <ScrollViewer Style="{StaticResource SidebarList}" DataContext="{Binding Tank}">
+                <ListBox x:Name="ContactList" ItemsSource="{Binding SidebarListItems}" SelectedItem="{Binding CurrentSidebarListItem}" ItemContainerStyle="{StaticResource SidebarListItem}">
+                    <!-- Name item template -->
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Border BorderThickness="2" BorderBrush="Black" CornerRadius="100">
+                                    <Image Width="35" Height="35" Source="{Binding IconURL}" />
+                                </Border>
+                                <TextBlock Text="{Binding Path=DisplayList,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
+                                <TextBlock Text="{Binding Heading}" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
