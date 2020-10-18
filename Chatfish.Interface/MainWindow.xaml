@@ -38,11 +38,23 @@
                 Command="{Binding SearchBarClickCommand}" />
             
             <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Name="MessageSearchBox" Margin="5" Height="50" Visibility="{Binding DisplaySearchBox, Converter={StaticResource BoolToVisibility}}"
-            VerticalAlignment="Top" />
-
+            VerticalAlignment="Top" />        
             <TextBlock x:Name="ChatName" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding CurrentChat.Name}" Visibility="{Binding DisplayChatName, Converter={StaticResource BoolToVisibility}}" Margin="5" />
-            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="ChatMessageBox" Margin="5" />
-            <Button Grid.Row="3" Grid.Column="2" Content="OK" Margin="5" />
+
+            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="ChatMessageBox" Margin="5,0,5,0" />
+            <TextBlock Height="40" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" IsHitTestVisible="False" Text="Send a message" VerticalAlignment="Center" Padding="4,0,0,0" Margin="5" Foreground="Red" FontSize="16">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=ChatMessageBox}" Value="">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        
         </Grid>
 
         <Border DataContext="{Binding CurrentPopupViewModel}" x:Name="ContactPopup" Style="{StaticResource ContactPopup}" Grid.Column="0" Grid.Row="1">
@@ -82,7 +94,7 @@
                         </Button.ToolTip>
                         <Image Source="Images/unavailable.png" />
                     </Button>
-                    <Button Command="{Binding SwitchToChatsCommand}">
+                    <Button Command="{Binding SwitchToChatsCommand}" Click="ViewChats_Click">
                         <Button.ToolTip>
                             <ToolTip PlacementRectangle="50,0,0,0">
                                 <TextBlock Text="View chats" />
@@ -92,7 +104,8 @@
                     </Button>
                 </StackPanel>
             </StackPanel>    
-
+            
+            <!-- Chat List -->
             <ScrollViewer Style="{StaticResource SidebarList}" DataContext="{Binding School}">
                 <ListBox x:Name="ChatList" ItemsSource="{Binding SchoolItems}" SelectedItem="{Binding CurrentSidebarListItem}" ItemContainerStyle="{StaticResource SidebarListItem}">
                     <!-- Name item template -->
@@ -118,8 +131,6 @@
                                 <Border BorderThickness="2" BorderBrush="Black" CornerRadius="100">
                                     <Image Width="35" Height="35" Source="{Binding IconURL}" />
                                 </Border>
-                                <TextBlock Text="{Binding Path=DisplayList,
-                                    RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
                                 <TextBlock Text="{Binding Heading}" />
                             </StackPanel>
                         </DataTemplate>

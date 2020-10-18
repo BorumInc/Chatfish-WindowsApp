@@ -39,5 +39,10 @@ namespace Chatfish.Interface
             this.DataContext = new ChatfishViewModel();
             Console.WriteLine(((ChatfishViewModel) DataContext).SidebarPanel.Tank.DisplayList);
         }
+
+        private void ViewChats_Click(object sender, RoutedEventArgs eventArgs)
+        {
+            ((ChatfishViewModel) DataContext).SidebarPanel.Tank.DisplayList = false;
+        }
     }
 }

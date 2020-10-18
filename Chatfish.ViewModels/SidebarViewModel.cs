@@ -23,6 +23,7 @@ namespace Chatfish.ViewModels
     public class SidebarViewModel : BaseViewModel
     {
         /* Private Instance Variables */
+
         private string _searchQuery = "";
 
         /* Public Properties */
@@ -31,7 +32,7 @@ namespace Chatfish.ViewModels
         /// The current list content type that the user has selected
         /// Defaults to Contacts
         /// </summary>
-        public SidebarState CurrentListState {get; set; } = SidebarState.Contacts;
+        public SidebarState CurrentListState {get; set; } = SidebarState.Chats;
         
         /// <summary>
         /// The set of data for the Tank, the contacts list
@@ -60,7 +61,6 @@ namespace Chatfish.ViewModels
                 OnPropertyChanged(nameof(sidebarList.SidebarListItems));                
             } 
         }
-
 
         /* Commands */
 
